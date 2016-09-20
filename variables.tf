@@ -12,23 +12,19 @@ variable "allowed_network" {
 
 variable "key_name" {
   description = "Name of the keypair to use in EC2."
-  default = "hromis"
 }
 
 variable "ucp_dns" {
   description = "UCP DNS name"
-  default     = "ucp.hromis.dckr.org"
 }
 
 variable "dtr_dns" {
   description = "UCP DNS name"
-  default     = "dtr.hromis.dckr.org"
 }
 
 variable "env_name" {
   type        = "string"
   description = "AWS region"
-  default     = "hromis-test"
 }
 
 variable "region" {
