@@ -12,7 +12,7 @@ resource "aws_security_group" "ucp" {
   ingress {
     from_port = 0
     to_port = 0
-    protocol = "tcp"
+    protocol = "-1"
     self = true
   }
   egress {
@@ -37,7 +37,7 @@ resource "aws_security_group" "dtr" {
   ingress {
     from_port = 0
     to_port = 0
-    protocol = "tcp"
+    protocol = "-1"
     self = true
   }
   egress {
