@@ -10,6 +10,10 @@ variable "allowed_network" {
   description = "The CIDR of network that is allowed to access the bastion host"
 }
 
+variable "zone_name" {
+  description = "Name of your DNS hosted zone, this can be a subdomain as well"
+}
+
 variable "key_name" {
   description = "Name of the keypair to use in EC2."
 }
