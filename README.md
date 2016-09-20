@@ -38,6 +38,8 @@ Fill out `variables.tf` with variables you wish to use for your environment. If 
 
 ## Usage
 
-Simply do a `terraform apply` from this repo.
+First verify the changes it's about to make with a `terraform plan`.
+
+Then simply do a `terraform apply` from this repo.
 
 To tear down the environment do a `terraform destroy`. Keeping instances running costs money, so it can be a good idea to destroy your environment when you are done testing.
