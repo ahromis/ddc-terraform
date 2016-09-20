@@ -1,36 +1,34 @@
 variable "access_key" {
-  type        = "string"
   description = "AWS access key."
 }
 
 variable "secret_key" {
-  type        = "string"
   description = "AWS secret key."
 }
 
 variable "allowed_network" {
-  type        = "string"
   description = "The CIDR of network that is allowed to access the bastion host"
 }
 
 variable "key_name" {
-  type        = "string"
   description = "Name of the keypair to use in EC2."
+  default = "hromis"
 }
 
 variable "ucp_dns" {
-  type        = "string"
   description = "UCP DNS name"
+  default     = "ucp.hromis.dckr.org"
 }
 
 variable "dtr_dns" {
-  type        = "string"
   description = "UCP DNS name"
+  default     = "dtr.hromis.dckr.org"
 }
 
 variable "env_name" {
   type        = "string"
   description = "AWS region"
+  default     = "hromis-test"
 }
 
 variable "region" {

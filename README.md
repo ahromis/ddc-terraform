@@ -35,6 +35,7 @@ aws ec2 import-key-pair --public-key-material file://~/.ssh/id_rsa.pub --key-nam
 ```
 
 Fill out `variables.tf` with variables you wish to use for your environment. If you don't you'll be prompted for variables on `terraform apply`.
+You can do that by adding in `default = <value>` in the `variables.tf` file for the variables that don't have a `default.`
 
 ## Usage
 
