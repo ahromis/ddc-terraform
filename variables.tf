@@ -28,7 +28,7 @@ variable "dtr_dns" {
 
 variable "env_name" {
   type        = "string"
-  description = "AWS region"
+  description = "Environment name"
 }
 
 variable "region" {
