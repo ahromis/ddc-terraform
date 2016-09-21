@@ -7,7 +7,7 @@ resource "aws_instance" "ucp-manager" {
   instance_type = "t2.medium"
   count = 3
   key_name = "${var.key_name}"
-  security_groups = [
+  vpc_security_group_ids = [
     "${aws_security_group.ucp.id}",
   ]
   subnet_id = "${aws_subnet.public.0.id}"
@@ -31,7 +31,7 @@ resource "aws_instance" "ucp-worker" {
   instance_type = "t2.medium"
   count = 3
   key_name = "${var.key_name}"
-  security_groups = [
+  vpc_security_group_ids = [
     "${aws_security_group.ucp.id}",
   ]
   subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
