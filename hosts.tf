@@ -10,7 +10,7 @@ resource "aws_instance" "ucp-manager" {
   vpc_security_group_ids = [
     "${aws_security_group.ucp.id}",
   ]
-  subnet_id = "${aws_subnet.public.0.id}"
+  subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
   tags = {
     Name = "${var.env_name}-ucp-manager-${count.index}"
     role = "ucp-manager"
