@@ -6,3 +6,7 @@ resource "aws_s3_bucket" "dtr-bucket" {
         Environment = "${var.env_name}"
     }
 }
+
+output "s3_bucket" {
+    value = "${aws_s3_bucket.dtr-bucket.id}"
+}
