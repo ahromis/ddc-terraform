@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "ddc" {
-  name = "hromis.dckr.org"
+  name = "${var.zone_name}"
   tags {
     Environment = "${var.env_name}"
   }
@@ -20,7 +20,7 @@ resource "aws_route53_record" "ddc-ns" {
 
 resource "aws_route53_record" "ucp" {
   zone_id = "${aws_route53_zone.ddc.zone_id}"
-  name = "${aws_elb.ucp.dns_name}"
+  name = "${var.ucp_dns}"
   type = "A"
   alias {
     name = "${aws_elb.ucp.dns_name}"
@@ -31,7 +31,7 @@ resource "aws_route53_record" "ucp" {
 
 resource "aws_route53_record" "dtr" {
   zone_id = "${aws_route53_zone.ddc.zone_id}"
-  name = "${aws_elb.dtr.dns_name}"
+  name = "${var.dtr_dns}"
   type = "A"
   alias {
     name = "${aws_elb.dtr.dns_name}"
@@ -40,19 +40,10 @@ resource "aws_route53_record" "dtr" {
   }
 }
 
-#resource "aws_route53_record" "ucp" {
-#   zone_id = "${var.zone_id}"
-#   name = "${var.ucp_dns}"
-#   type = "CNAME"
-#   ttl = "300"
-#   records = ["${aws_elb.ucp.dns_name}"]
-#}
+output "ucp_dns" {
+  value = "${var.ucp_dns}"
+}
 
-#resource "aws_route53_record" "dtr" {
-#   zone_id = "${var.zone_id}"
-#   name = "${var.dtr_dns}"
-#   type = "CNAME"
-#   ttl = "300"
-#   records = ["${aws_elb.dtr.dns_name}"]
-#}
-
+output "dtr_dns" {
+  value = "${var.dtr_dns}"
+}
