@@ -6,7 +6,7 @@ resource "aws_route53_zone" "ddc" {
 }
 
 resource "aws_route53_record" "ddc-ns" {
-    zone_id = "${aws_route53_zone.ddc.zone_id}"
+    zone_id = "${var.zone_id}"
     name = "${var.zone_name}"
     type = "NS"
     ttl = "30"
@@ -21,23 +21,43 @@ resource "aws_route53_record" "ddc-ns" {
 resource "aws_route53_record" "ucp" {
   zone_id = "${aws_route53_zone.ddc.zone_id}"
   name = "${var.ucp_dns}"
-  type = "A"
-  alias {
-    name = "${aws_elb.ucp.dns_name}"
-    zone_id = "${aws_elb.ucp.zone_id}"
-    evaluate_target_health = true
-  }
+  type = "CNAME"
+  ttl = "300"
+  records = ["${aws_elb.ucp.dns_name}"]
 }
 
 resource "aws_route53_record" "dtr" {
   zone_id = "${aws_route53_zone.ddc.zone_id}"
   name = "${var.dtr_dns}"
+  type = "CNAME"
+  ttl = "300"
+  records = ["${aws_elb.dtr.dns_name}"]
+}
+
+resource "aws_route53_record" "ucp-manager" {
+  count = "${var.manager_count}"
+  zone_id = "${aws_route53_zone.ddc.zone_id}"
+  name = "ucp-manager${count.index}.${var.zone_name}"
   type = "A"
-  alias {
-    name = "${aws_elb.dtr.dns_name}"
-    zone_id = "${aws_elb.dtr.zone_id}"
-    evaluate_target_health = true
-  }
+  ttl = "300"
+  records = ["${element(aws_instance.ucp-manager.*.public_ip, count.index)}"]
+}
+
+resource "aws_route53_record" "ucp-worker" {
+  count = "${var.worker_count}"
+  zone_id = "${aws_route53_zone.ddc.zone_id}"
+  name = "ucp-worker${count.index}.${var.zone_name}"
+  type = "A"
+  ttl = "300"
+  records = ["${element(aws_instance.ucp-worker.*.public_ip, count.index)}"]
+}
+
+output "ucp_manager_host_dns" {
+  value = "${join(",", aws_route53_record.ucp-manager.*.name)}"
+}
+
+output "ucp_worker_host_dns" {
+  value = "${join(",", aws_route53_record.ucp-worker.*.name)}"
 }
 
 output "ucp_dns" {

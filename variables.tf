@@ -10,12 +10,35 @@ variable "allowed_network" {
   description = "The CIDR of network that is allowed to access the bastion host"
 }
 
+variable "key_name" {
+  description = "Name of the keypair to use in EC2."
+}
+
 variable "zone_name" {
   description = "Name of your DNS hosted zone, this can be a subdomain as well"
 }
 
-variable "key_name" {
-  description = "Name of the keypair to use in EC2."
+variable "zone_id" {
+  description = "Name of the hosted Zone ID so that subdomains will work. This is if one already exists, otherwise you'll need to create one in r53.tf."
+}
+
+variable "manager_type" {
+  description = "UCP manager instance type"
+}
+
+variable "manager_count" {
+  description = "Number of UCP manager nodes (1,3,5,7)"
+  default     = "3"
+}
+
+variable "worker_type" {
+  description = "UCP worker instance type"
+  default     = "m3.medium"
+}
+
+variable "worker_count" {
+  description = "Number of UCP worker nodes"
+  default     = "3"
 }
 
 variable "ucp_dns" {
@@ -52,6 +75,8 @@ variable "public_cidrs" {
     "2" = "10.0.20.0/24"
   }
 }
+
+# Note: This mapping has to be updated manually, terraform didn't allow interpolated variables here
 
 variable "availability_zones" {
   type        = "map"

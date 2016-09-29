@@ -4,9 +4,10 @@ resource "aws_instance" "ucp-manager" {
     key_file = "${var.key_path}"
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
-  instance_type = "t2.medium"
-  count = 3
+  instance_type = "${var.manager_type}"
+  count = "${var.manager_count}"
   key_name = "${var.key_name}"
+  user_data = "${file("./files/userdata.sh")}"
   vpc_security_group_ids = [
     "${aws_security_group.ucp.id}",
   ]
@@ -15,6 +16,18 @@ resource "aws_instance" "ucp-manager" {
     Name = "${var.env_name}-ucp-manager-${count.index}"
     role = "ucp-manager"
     environment = "${var.env_name}"
+  }
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = 8
+    delete_on_termination = true
+  }
+  ebs_block_device {
+    device_name           = "/dev/sdb"
+    snapshot_id           = ""
+    volume_type           = "gp2"
+    volume_size           = 20
+    delete_on_termination = true
   }
 }
 
@@ -28,9 +41,10 @@ resource "aws_instance" "ucp-worker" {
     key_file = "${var.key_path}"
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
-  instance_type = "t2.medium"
-  count = 3
+  instance_type = "${var.worker_type}"
+  count = "${var.worker_count}"
   key_name = "${var.key_name}"
+  user_data = "${file("./files/userdata.sh")}"
   vpc_security_group_ids = [
     "${aws_security_group.ucp.id}",
   ]
@@ -39,6 +53,18 @@ resource "aws_instance" "ucp-worker" {
     Name = "${var.env_name}-ucp-worker-${count.index}"
     role = "ucp-worker"
     environment = "${var.env_name}"
+  }
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = 8
+    delete_on_termination = true
+  }
+  ebs_block_device {
+    device_name           = "/dev/sdb"
+    snapshot_id           = ""
+    volume_type           = "gp2"
+    volume_size           = 20
+    delete_on_termination = true
   }
 }
 
