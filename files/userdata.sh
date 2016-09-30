@@ -16,6 +16,7 @@ NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=${INSTANCE_ID}" 
 if [[ "${HOSTNAME}" != "${NAME%%.*}" ]]; then
   echo "${NAME}" > /etc/hostname
   hostname "${NAME}"
+  sed -i "/127.0.0.1.*/a 127.0.1.1 ${NAME}" /etc/hosts
   echo "Fixed Hostname"
 else
   echo "Hostname ok"
