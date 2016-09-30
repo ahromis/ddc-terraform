@@ -5,6 +5,7 @@ resource "aws_instance" "ucp-manager" {
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "${var.manager_type}"
+  iam_instance_profile = "${aws_iam_instance_profile.default.id}"
   count = "${var.manager_count}"
   key_name = "${var.key_name}"
   user_data = "${file("./files/userdata.sh")}"
@@ -42,6 +43,7 @@ resource "aws_instance" "ucp-worker" {
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "${var.worker_type}"
+  iam_instance_profile = "${aws_iam_instance_profile.default.id}"
   count = "${var.worker_count}"
   key_name = "${var.key_name}"
   user_data = "${file("./files/userdata.sh")}"
