@@ -15,6 +15,18 @@ resource "aws_security_group" "ucp" {
     protocol = "-1"
     self = true
   }
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    security_groups = ["${aws_security_group.elb.id}"]
+  }
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    security_groups = ["${aws_security_group.elb.id}"]
+  }
   egress {
     from_port = 0
     to_port = 0
@@ -68,7 +80,7 @@ resource "aws_security_group" "elb" {
   egress {
     from_port = 0
     to_port = 0
-    protocol = "tcp"
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
