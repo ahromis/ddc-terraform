@@ -5,7 +5,8 @@ resource "aws_instance" "ucp-manager" {
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "${var.manager_type}"
-  iam_instance_profile = "${aws_iam_instance_profile.default.id}"
+  #iam_instance_profile = "${aws_iam_instance_profile.default.id}"
+  iam_instance_profile = "hromis-default"
   count = "${var.manager_count}"
   key_name = "${var.key_name}"
   user_data = "${file("./files/userdata.sh")}"
@@ -14,7 +15,7 @@ resource "aws_instance" "ucp-manager" {
   ]
   subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
   tags = {
-    Name = "${var.env_name}-ucp-manager-${count.index}"
+    Name = "${var.env_name}-ucp-manager${count.index}"
     role = "ucp-manager"
     environment = "${var.env_name}"
   }
@@ -43,7 +44,8 @@ resource "aws_instance" "ucp-worker" {
   }
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "${var.worker_type}"
-  iam_instance_profile = "${aws_iam_instance_profile.default.id}"
+  #iam_instance_profile = "${aws_iam_instance_profile.default.id}"
+  iam_instance_profile = "hromis-default"
   count = "${var.worker_count}"
   key_name = "${var.key_name}"
   user_data = "${file("./files/userdata.sh")}"
@@ -52,7 +54,7 @@ resource "aws_instance" "ucp-worker" {
   ]
   subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
   tags = {
-    Name = "${var.env_name}-ucp-worker-${count.index}"
+    Name = "${var.env_name}-ucp-worker${count.index}"
     role = "ucp-worker"
     environment = "${var.env_name}"
   }
