@@ -27,7 +27,7 @@ variable "manager_type" {
 }
 
 variable "manager_count" {
-  description = "Number of UCP manager nodes (1,3,5,7)"
+  description = "Number of UCP manager nodes (3,5,7)"
   default     = "3"
 }
 
