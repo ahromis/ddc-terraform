@@ -33,7 +33,6 @@ variable "manager_count" {
 
 variable "worker_type" {
   description = "UCP worker instance type"
-  default     = "m3.medium"
 }
 
 variable "worker_count" {
