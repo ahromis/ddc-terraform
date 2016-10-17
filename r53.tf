@@ -6,7 +6,7 @@ resource "aws_route53_zone" "ddc" {
 }
 
 resource "aws_route53_record" "ddc-ns" {
-    zone_id = "${var.zone_id}"
+    zone_id = "${aws_route53_zone.ddc.zone_id}"
     name = "${var.zone_name}"
     type = "NS"
     ttl = "30"

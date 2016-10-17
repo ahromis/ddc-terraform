@@ -7,7 +7,7 @@ variable "secret_key" {
 }
 
 variable "allowed_network" {
-  description = "The CIDR of network that is allowed to access the bastion host"
+  description = "The CIDR of network that is allowed to ssh to the servers"
 }
 
 variable "key_name" {
@@ -16,10 +16,6 @@ variable "key_name" {
 
 variable "zone_name" {
   description = "Name of your DNS hosted zone, this can be a subdomain as well"
-}
-
-variable "zone_id" {
-  description = "Name of the hosted Zone ID so that subdomains will work. This is if one already exists, otherwise you'll need to create one in r53.tf."
 }
 
 variable "manager_type" {
