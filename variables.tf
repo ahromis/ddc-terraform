@@ -58,16 +58,16 @@ variable "region" {
 variable "vpc_cidr" {
   type        = "string"
   description = "CIDR for VPC"
-  default     = "10.0.0.0/16"
+  default     = "192.168.0.0/16"
 }
 
 variable "public_cidrs" {
   type        = "map"
   description = "CIDR for public subnets"
   default     = {
-    "0" = "10.0.0.0/24"
-    "1" = "10.0.10.0/24"
-    "2" = "10.0.20.0/24"
+    "0" = "192.168.10.0/24"
+    "1" = "192.168.20.0/24"
+    "2" = "192.168.30.0/24"
   }
 }
 
